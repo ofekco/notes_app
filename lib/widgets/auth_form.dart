@@ -97,12 +97,13 @@ class _AuthFormState extends State<AuthForm> {
                   if (!widget.isLoading)
                     ElevatedButton(
                       child: Text(_isLogin ? 'Login' : 'Signup', 
-                      style: TextStyle(color: Color(0xFF444444),)),
-                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColor,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.0, vertical: 8.0),
-                        shape: RoundedRectangleBorder(
+                        style: TextStyle(color: Color(0xFF444444),)
+                      ),
+                      style: ElevatedButton.styleFrom(
+                       backgroundColor: Theme.of(context).primaryColor,
+                       padding: EdgeInsets.symmetric(
+                          horizontal: 30.0, vertical: 8.0),
+                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         )),
                       onPressed: _trySubmit,
