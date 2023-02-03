@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Notes',
           theme: ThemeData( 
-            primaryColor: Color(0xFFE7D2CC),
+            primaryColor: Color(0xFFE6D1CB),
             buttonTheme: ButtonTheme.of(context).copyWith(
               buttonColor: Color(0xFFE7D2CC),
               textTheme: ButtonTextTheme.primary,
@@ -34,18 +34,20 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-          home: appSnapshot.connectionState != ConnectionState.done ? SplashScreen() : StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (ctx, userSnapshot) {
+          home: appSnapshot.connectionState != ConnectionState.done ? SplashScreen() : 
+            StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (ctx, userSnapshot) {
           if (userSnapshot.connectionState == ConnectionState.waiting) {
             return SplashScreen();
           }
           if (userSnapshot.hasData) {
             return homeScreen();
           }
-          return homeScreen();
-        })
-        );
+          return AuthScreen();
+         }
+        )
+      );
 
-      });
+    });
       
   }
 }

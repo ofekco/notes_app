@@ -1,19 +1,42 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class homeScreen extends StatefulWidget {
-  @override
-  State<homeScreen> createState() => _homeScreenState();
+enum ViewOptions {
+  listView,
+  mapView
 }
 
-class _homeScreenState extends State<homeScreen> {
+class homeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-        
-      ]),
+        title: Text('My Notes'),
+        actions: <Widget>[
+          OutlinedButton( //sign out button
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: Icon(Icons.logout_outlined, color: Colors.white),
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          PopupMenuButton(
+            onSelected: (ViewOptions selectedItem) {
+              //change widgets
+            },
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              PopupMenuItem(child: Text("List view"), value: ViewOptions.listView),
+              PopupMenuItem(child: Text("Map view"), value: ViewOptions.mapView),
+            ],
+          ),
+        ]
+      ),
       backgroundColor: Theme.of(context).primaryColor,
       body: Center(
         child: Text('home...',
