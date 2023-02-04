@@ -1,9 +1,7 @@
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/modeles/note.dart';
-import 'package:notes_app/screens/home_screen.dart';
 import 'package:notes_app/widgets/my_title_textField.dart';
 import 'package:location/location.dart';
 
@@ -27,8 +25,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   Note _editableNote = Note("0", "", "", DateTime.now(), 0, 0);
   String title = '';
   String body = '';
-  TextEditingController _titleTextController = TextEditingController();
-  TextEditingController _bodyTextController = TextEditingController();
+  final TextEditingController _titleTextController = TextEditingController();
+  final TextEditingController _bodyTextController = TextEditingController();
 
   void handleTitleTextChange() {
         setState(() {
@@ -81,8 +79,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       _editableNote.Longitude = location.longitude as double;
       _editableNote.Id = (await _notesCollection.snapshots().length +1).toString();
 
-      await _notesCollection.add(_editableNote.toFirestore());
-      Navigator.pop(context); 
+      await _notesCollection.add(_editableNote.toFirestore()).then(
+        (value) => {
+          Navigator.pop(context)
+        });
+      
     }
 
 
@@ -93,22 +94,22 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
-                    icon: Icon(
-                        Icons.arrow_back,
-                        color: Color(0xFF444444),
-                    ),
-                    tooltip: 'Back',
-                    onPressed: () => {
-                      Navigator.pop(context)
-                    },
-                ),
+          icon: const Icon(
+              Icons.arrow_back,
+              color: Color(0xFF444444),
+          ),
+          tooltip: 'Back',
+          onPressed: () => {
+            Navigator.pop(context)
+          },
+        ),
         actions: <Widget>[
           IconButton(
             onPressed: _saveNote,
-            icon: Icon(Icons.save_outlined, color: Color(0xFF444444),)),
+            icon: const Icon(Icons.save_outlined, color: Color(0xFF444444),)),
           IconButton(
             onPressed: _deleteNote, 
-            icon: Icon(Icons.delete_outlined, color: Color(0xFF444444),)),
+            icon: const Icon(Icons.delete_outlined, color: Color(0xFF444444),)),
         ],
         title: MyTitleTextField(_titleTextController, _editableNote.Title),
       ),
@@ -116,17 +117,17 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor
           ),
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           height: MediaQuery.of(context).size.height,
           child: TextField(
-              controller: _bodyTextController,
-              maxLines: null,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: null,
-              style: TextStyle(
-                  fontSize: 19,
-                  height: 1.5,
-                ),
+            controller: _bodyTextController,
+            maxLines: null,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: null,
+            style: const TextStyle(
+                fontSize: 19,
+                height: 1.5,
+              ),
             ),
           ),
         );

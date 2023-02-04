@@ -35,18 +35,18 @@ class _AuthFormState extends State<AuthForm> {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   TextFormField(
-                    style: TextStyle(color: Color(0xFF444444)),
-                    key: ValueKey('email'),
+                    style: const TextStyle(color: Color(0xFF444444)),
+                    key: const ValueKey('email'),
                     validator: (value) {
                       if (value == null || value.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid email address.';
@@ -54,7 +54,7 @@ class _AuthFormState extends State<AuthForm> {
                       return null;
                     },
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Email address',
                     ),
                     onSaved: (value) {
@@ -63,37 +63,37 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   if (!_isLogin)
                     TextFormField(
-                      style: TextStyle(color: Color(0xFF444444)),
-                      key: ValueKey('username'),
+                      style: const TextStyle(color: Color(0xFF444444)),
+                      key: const ValueKey('username'),
                       validator: (value) {
                         if (value == null || value.isEmpty || value.length < 3) {
                           return 'Please enter at least 3 characters';
                         }
                         return null;
                       },
-                      decoration: InputDecoration(labelText: 'Username'),
+                      decoration: const InputDecoration(labelText: 'Username'),
                       onSaved: (value) {
                         _userName = value.toString();
                       },
                     ),
                   TextFormField(
-                    style: TextStyle(color: Color(0xFF444444)),
-                    key: ValueKey('password'),
+                    style: const TextStyle(color: Color(0xFF444444)),
+                    key: const ValueKey('password'),
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 6) {
                         return 'Password must be at least 6 characters';
                       }
                       return null;
                     },
-                    decoration: InputDecoration(labelText: 'Password'),
+                    decoration: const InputDecoration(labelText: 'Password'),
                     obscureText: true,
                     onSaved: (value) {
                       _userPassword = value.toString();
                     },
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   if (widget.isLoading) 
-                    CircularProgressIndicator(),
+                    const CircularProgressIndicator(),
                   if (!widget.isLoading)
                     ElevatedButton(
                       child: Text(_isLogin ? 'Login' : 'Signup', 
@@ -111,7 +111,7 @@ class _AuthFormState extends State<AuthForm> {
                   if (!widget.isLoading)
                     TextButton(
                       child: Text(_isLogin ? 'Don\'t have an account? Signup!' : 'I already have an account',
-                          style: TextStyle(color: Color(0xFF444444)),
+                          style: const TextStyle(color: Color(0xFF444444)),
                         ),
                       onPressed: () {
                         setState(() {

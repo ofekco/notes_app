@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyTitleTextField extends StatelessWidget {
    final TextEditingController _textFieldController;
-   final _oldTitle;
+   final String _oldTitle;
 
   const MyTitleTextField(this._textFieldController, this._oldTitle, {super.key});
 
@@ -15,7 +15,7 @@ class MyTitleTextField extends StatelessWidget {
 
     return TextField(
         controller: _textFieldController,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
@@ -33,7 +33,7 @@ class MyTitleTextField extends StatelessWidget {
         ),
         maxLength: 32,
         maxLines: 1,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.bold,
             height: 1.5,

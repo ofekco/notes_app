@@ -38,11 +38,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
       showDialog(
         context: ctx, 
-        builder: (ctx) => AlertDialog( title: Text('Error!'),
+        builder: (ctx) => AlertDialog( title: const Text('Error!'),
           content: Text(message),
           actions: <Widget>[
            TextButton(
-             child: Text('OK'),
+             child: const Text('OK'),
               onPressed: () { 
                 Navigator.of(ctx).pop();
              },
@@ -53,7 +53,6 @@ class _AuthScreenState extends State<AuthScreen> {
         _isLoading = false;
       });
     } catch (err) {
-      print(err);
       setState(() {
         _isLoading = false;
       });

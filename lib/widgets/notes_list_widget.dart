@@ -29,7 +29,7 @@ class _NotesListState extends State<NotesList> {
             );
           }
           final notes = streamSnapshot.data?.docs;
-          if(notes == null || notes.length == 0) {
+          if(notes == null || notes.isEmpty) {
             return const Center(
               child: Text('You don\'t have any notes yet',
                 style: TextStyle(
@@ -41,8 +41,8 @@ class _NotesListState extends State<NotesList> {
           return ListView.builder(
             itemCount: notes.length,
             itemBuilder: (ctx, index) => Container(
-              padding: EdgeInsets.all(8),
-              child: NoteItem(DBnote: notes[index].data()),
+              padding: const EdgeInsets.all(8),
+              child: NoteItem(firestoreNote: notes[index].data()),
             ),
           );
         },

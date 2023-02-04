@@ -1,21 +1,20 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/modeles/note.dart';
 import 'package:notes_app/screens/note_edit_screen.dart';
 import 'package:notes_app/widgets/notes_list_widget.dart';
-import 'package:notes_app/modeles/user.dart';
 import 'package:notes_app/widgets/notes_map_widget.dart';
 
 
-class homeScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
-  State<homeScreen> createState() => _homeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _homeScreenState extends State<homeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
    static const List<Widget> _viewOptionsWidgets = <Widget>[  
     NotesList(),
     MapView(),
@@ -25,16 +24,6 @@ class _homeScreenState extends State<homeScreen> {
         fontSize: 18.0,
       ),),
   ]; 
-
-  void _haveNotes() async {
-    if(await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('notes')
-        .snapshots().isEmpty == true) {
-           _viewOptionWidgetsIndex = 2; 
-        } 
-  }
 
 
   int _viewOptionWidgetsIndex = 0;
@@ -57,10 +46,10 @@ class _homeScreenState extends State<homeScreen> {
               .doc(FirebaseAuth.instance.currentUser!.uid).get(),
             builder: (context, snapshot) {
               if(snapshot.connectionState ==  ConnectionState.waiting) {
-                return Text(" ");
+                return const Text(" ");
               } else {
                 return Text("Welcome " + snapshot.data!['username'] + "!", 
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF444444),
                     fontSize: 24),
                 );
@@ -73,19 +62,19 @@ class _homeScreenState extends State<homeScreen> {
             onPressed: () {
               FirebaseAuth.instance.signOut();
             },
-            child: Icon(Icons.logout_outlined, color: Color(0xFF444444), size: 26,),
             style: OutlinedButton.styleFrom(
-              side: BorderSide(
+              side: const BorderSide(
                 color: Colors.transparent,
               ),
             ),
+            child: const Icon(Icons.logout_outlined, color: Color(0xFF444444), size: 26,),
           ),
         ]
       ),
       bottomNavigationBar: BottomNavigationBar(  
         items: <BottomNavigationBarItem>[  
           BottomNavigationBarItem(  
-            icon: Icon(Icons.list_alt_outlined, color: Color(0xFF444444)),   
+            icon: const Icon(Icons.list_alt_outlined, color: Color(0xFF444444)),   
             label: "List",
             backgroundColor: Theme.of(context).secondaryHeaderColor,
           ),  

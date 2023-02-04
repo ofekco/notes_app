@@ -1,27 +1,21 @@
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/modeles/note.dart';
 import 'package:intl/intl.dart';
 import 'package:notes_app/screens/note_edit_screen.dart';
 
 class NoteItem extends StatelessWidget {
-  final Map<String, dynamic> DBnote;
+  final Map<String, dynamic> firestoreNote;
 
-  const NoteItem({Key? key, required this.DBnote}) : super(key: key);
+  const NoteItem({Key? key, required this.firestoreNote}) : super(key: key);
   
 
   @override
   Widget build(BuildContext context) {
-    final Timestamp _date = DBnote['date'];
+    final Timestamp dateAsTimestemp = firestoreNote['date'];
 
-    return GestureDetector(
-      onTap: () {
-        //navigate to note edit/view screem
-      },
+    return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
@@ -41,10 +35,10 @@ class NoteItem extends StatelessWidget {
               onTap: () {
                 Navigator.push(context,             
                 MaterialPageRoute(builder: ((context) => 
-                  NoteEditScreen(Note(DBnote['id'], DBnote['title'], DBnote['body'], _date.toDate() , DBnote['latitude'], DBnote['longitude'])))));
+                  NoteEditScreen(Note(firestoreNote['id'], firestoreNote['title'], firestoreNote['body'], dateAsTimestemp.toDate() , firestoreNote['latitude'], firestoreNote['longitude'])))));
               },
               title: Text(
-                DBnote['title'],
+                firestoreNote['title'],
                 style: const TextStyle(
                   fontSize: 26,
                   color: Color(0xFF444444),
@@ -53,10 +47,10 @@ class NoteItem extends StatelessWidget {
               subtitle: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
-                  DateFormat().format(_date.toDate()),
+                  DateFormat().format(dateAsTimestemp.toDate()),
                   style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xFF444444).withOpacity(.4),
+                    color: const Color(0xFF444444).withOpacity(.4),
                   ),
                 ),
               ),
