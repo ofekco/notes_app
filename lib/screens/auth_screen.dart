@@ -24,10 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
       if (isLogin == true) {
         authResult = await _auth.signInWithEmailAndPassword(email: email, password: password);
       } else {
-        authResult = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
+        authResult = await _auth.createUserWithEmailAndPassword(email: email,password: password);
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user!.uid).set({'username': username, 'email': email});

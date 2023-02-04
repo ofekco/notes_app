@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
           title: 'Notes',
           theme: ThemeData( 
             primaryColor: Color(0xFFE6D1CB),
+            secondaryHeaderColor: Color(0xFFEEEDE7),
             buttonTheme: ButtonTheme.of(context).copyWith(
               buttonColor: Color(0xFFE7D2CC),
               textTheme: ButtonTextTheme.primary,

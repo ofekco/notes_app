@@ -1,20 +1,53 @@
-// import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:notes_app/widgets/note_item_widget.dart';
+import 'package:intl/intl.dart';
 
+class NotesList extends StatefulWidget {
+  const NotesList({super.key});
 
-// class MyWidget extends StatefulWidget {
-//   const MyWidget({super.key});
+  @override
+  State<NotesList> createState() => _NotesListState();
+}
 
-//   @override
-//   State<MyWidget> createState() => _MyWidgetState();
-// }
-
-// class _MyWidgetState extends State<MyWidget> {
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: ,
-//       child: ,
-//     )
-//   }
-// }
+class _NotesListState extends State<NotesList> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 300,
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('notes')
+            .snapshots(),
+        builder: (ctx, streamSnapshot) {
+          if (streamSnapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final notes = streamSnapshot.data?.docs;
+          if(notes == null || notes.length == 0) {
+            return const Center(
+              child: Text('You don\'t have any notes yet',
+                style: TextStyle(
+                color: Color(0xFF444444),
+                fontSize: 20.0,
+              ),),
+            );
+          }
+          return ListView.builder(
+            itemCount: notes.length,
+            itemBuilder: (ctx, index) => Container(
+              padding: EdgeInsets.all(8),
+              child: NoteItem(DBnote: notes[index].data()),
+            ),
+          );
+        },
+      ),
+      );
+      
+  }
+}
