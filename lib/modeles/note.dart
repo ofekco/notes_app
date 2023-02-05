@@ -39,7 +39,7 @@ class Note {
     _lastUpdateDate = date;
   }
 
-  double get latitudeData {
+  double get Latitude {
     return _latitude;
   }
 

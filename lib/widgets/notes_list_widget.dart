@@ -21,6 +21,7 @@ class _NotesListState extends State<NotesList> {
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('notes')
+            .orderBy('date')
             .snapshots(),
         builder: (ctx, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
