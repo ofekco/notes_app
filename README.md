@@ -1,16 +1,10 @@
 # notes_app
 
-A new Flutter project.
+Location based notes mobile Flutter application for android written in Dart.
 
-## Getting Started
+This app allows the users to create and manage their notes and view them as a list sorted by update time, or on a map by the location in which they were created.
 
-This project is a starting point for a Flutter application.
+The notes are beening stored at Firebase Firestore db.
+In addition, the authentication is carried out by Firebase authentication SDK.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
