@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +57,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         super.dispose();
     }
 
+
     void _deleteNote() {
       if(widget.isNew == false) {
        _notesCollection
@@ -102,6 +101,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           },
         ),
         actions: <Widget>[
+          IconButton(
+            onPressed: () {}, 
+            icon: const Icon(Icons.image_outlined, color: Color(0xFF444444),)),
           IconButton(
             onPressed: _saveNote,
             icon: const Icon(Icons.save_outlined, color: Color(0xFF444444),)),
