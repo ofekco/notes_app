@@ -15,7 +15,6 @@ class _NotesListState extends State<NotesList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
       child: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('users')

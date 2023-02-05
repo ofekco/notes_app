@@ -79,7 +79,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       if(widget.isNew == false) {
         _deleteNote();
       }
-
       _editableNote.Title = _titleTextController.text;
       _editableNote.Body = _bodyTextController.text;
       _editableNote.UpdateDate = DateTime.now();
