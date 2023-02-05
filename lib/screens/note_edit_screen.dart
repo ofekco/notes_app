@@ -24,20 +24,20 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           .collection('notes');
 
   Note _editableNote = Note("", "", DateTime.now(), 0, 0);
-  String title = '';
-  String body = '';
+  String _title = '';
+  String _body = '';
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _bodyTextController = TextEditingController();
 
   void handleTitleTextChange() {
         setState(() {
-            title = _titleTextController.text.trim();
+            _title = _titleTextController.text.trim();
         });
     }
 
     void handleBodyChange() {
         setState(() {
-            body = _bodyTextController.text.trim();
+            _body = _bodyTextController.text.trim();
         });
     }
 
@@ -67,8 +67,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         .then((snapshot) => snapshot.docs[0].reference.delete());
         
       }
-
-      Navigator.pop(context); 
     }
 
     void _getLocation() async {
@@ -77,11 +75,17 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       _editableNote.Longitude = location.longitude as double;
   }
 
-    void _saveNote() {
+    void _saveNote() {      
+      if(widget.isNew == false) {
+        _deleteNote();
+      }
+
       _editableNote.Title = _titleTextController.text;
       _editableNote.Body = _bodyTextController.text;
       _editableNote.UpdateDate = DateTime.now();
-      _notesCollection.add(_editableNote.toFirestore());
+
+        _notesCollection.add(_editableNote.toFirestore());
+      
       Navigator.pop(context);
     }
 
@@ -106,7 +110,10 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             onPressed: _saveNote,
             icon: const Icon(Icons.save_outlined, color: Color(0xFF444444),)),
           IconButton(
-            onPressed: _deleteNote, 
+            onPressed: () {
+              _deleteNote();
+              Navigator.pop(context); 
+            }, 
             icon: const Icon(Icons.delete_outlined, color: Color(0xFF444444),)),
         ],
         title: MyTitleTextField(_titleTextController, _editableNote.Title),
