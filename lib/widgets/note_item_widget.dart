@@ -35,7 +35,7 @@ class NoteItem extends StatelessWidget {
               onTap: () {
                 Navigator.push(context,             
                 MaterialPageRoute(builder: ((context) => 
-                  NoteEditScreen(Note(firestoreNote['id'], firestoreNote['title'], firestoreNote['body'], dateAsTimestemp.toDate() , firestoreNote['latitude'], firestoreNote['longitude'])))));
+                  NoteEditScreen(Note(firestoreNote['title'], firestoreNote['body'], dateAsTimestemp.toDate() , firestoreNote['latitude'], firestoreNote['longitude']), false))));
               },
               title: Text(
                 firestoreNote['title'],

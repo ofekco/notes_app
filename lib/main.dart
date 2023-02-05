@@ -7,7 +7,7 @@ import 'package:notes_app/screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();  
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -18,17 +18,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+    final Future<FirebaseApp> initialization = Firebase.initializeApp();
     return FutureBuilder(
-      future: _initialization,
+      future: initialization,
       builder: (context, appSnapshot) {
         return MaterialApp(
           title: 'Notes',
           theme: ThemeData( 
-            primaryColor: Color(0xFFE6D1CB),
-            secondaryHeaderColor: Color(0xFFEEEDE7),
+            primaryColor: const Color(0xFFE6D1CB),
+            secondaryHeaderColor: const Color(0xFFEEEDE7),
             buttonTheme: ButtonTheme.of(context).copyWith(
-              buttonColor: Color(0xFFE7D2CC),
+              buttonColor: const Color(0xFFE7D2CC),
               textTheme: ButtonTextTheme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             return SplashScreen();
           }
           if (userSnapshot.hasData) {
-            return HomeScreen();
+            return const HomeScreen();
           }
           return AuthScreen();
          }

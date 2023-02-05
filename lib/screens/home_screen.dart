@@ -15,29 +15,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final List<Note> _userNotes = [];
+
    static const List<Widget> _viewOptionsWidgets = <Widget>[  
     NotesList(),
     MapView(),
-    Text('Loading...', 
-      style: TextStyle(
-        color: Color(0xFF444444),
-        fontSize: 18.0,
-      ),),
   ]; 
 
 
-  int _viewOptionWidgetsIndex = 0;
+  int _navigationBarIndex = 0;
 
   void _onItemTapped(int index) {  
     setState(() {  
-      _viewOptionWidgetsIndex = index; 
+      _navigationBarIndex = index; 
     });  
   }  
 
   
   @override
   Widget build(BuildContext context) {
-          
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -79,13 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Theme.of(context).secondaryHeaderColor,
           ),  
           BottomNavigationBarItem(  
-            icon: Icon(Icons.location_on_outlined, color: Color(0xFF444444)),
+            icon: const Icon(Icons.location_on_outlined, color: Color(0xFF444444)),
             label: "Map",    
             backgroundColor: Theme.of(context).secondaryHeaderColor,
           ),  
         ],  
         type: BottomNavigationBarType.shifting,  
-        currentIndex: _viewOptionWidgetsIndex,  
+        currentIndex: _navigationBarIndex,  
         selectedItemColor: Colors.black,  
         iconSize: 35,  
         onTap: _onItemTapped,  
@@ -98,9 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add, color: Color(0xFF444444)),
         onPressed: () {
           Navigator.push(context,  
-            MaterialPageRoute(builder: ((context) => NoteEditScreen(Note("0", '' '', '', DateTime.now(), 0, 0)))));
+            MaterialPageRoute(builder: ((context) => NoteEditScreen(Note('' '', '', DateTime.now(), 0, 0), true))));
         }),
-      body: _viewOptionsWidgets[_viewOptionWidgetsIndex]
+      body: _viewOptionsWidgets[_navigationBarIndex],      
     );
   }
 }

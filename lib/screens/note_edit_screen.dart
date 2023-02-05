@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +8,10 @@ import 'package:notes_app/widgets/my_title_textField.dart';
 import 'package:location/location.dart';
 
 class NoteEditScreen extends StatefulWidget {
-  static const routeName = '/note_edit';
   final Note currentNote;
+  final bool isNew;
 
-  const NoteEditScreen(this.currentNote, {super.key});
+  const NoteEditScreen(this.currentNote, this.isNew, {super.key});
 
   @override
   State<NoteEditScreen> createState() => _NoteEditScreenState();
@@ -21,8 +23,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('notes');
 
-
-  Note _editableNote = Note("0", "", "", DateTime.now(), 0, 0);
+  Note _editableNote = Note("", "", DateTime.now(), 0, 0);
   String title = '';
   String body = '';
   final TextEditingController _titleTextController = TextEditingController();
@@ -44,6 +45,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     void initState() {
         super.initState();
         _editableNote = widget.currentNote;
+        _getLocation();
         _titleTextController.text = _editableNote.Title;
         _bodyTextController.text = _editableNote.Body;
         _titleTextController.addListener(handleTitleTextChange);
@@ -58,9 +60,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     }
 
     void _deleteNote() {
-      if(_editableNote.Id != "0") {
+      if(widget.isNew == false) {
        _notesCollection
-        .where('id', isEqualTo: _editableNote.Id)
+        .where('date', isEqualTo: _editableNote.UpdateDate)
         .get()
         .then((snapshot) => snapshot.docs[0].reference.delete());
         
@@ -69,23 +71,19 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       Navigator.pop(context); 
     }
 
-    void _saveNote() async {
-      _editableNote.Title = _titleTextController.text;
-      _editableNote.Body = _bodyTextController.text;
-      _editableNote.UpdateDate = DateTime.now();
-
+    void _getLocation() async {
       final location = await Location().getLocation();
       _editableNote.Latitude = location.latitude as double;
       _editableNote.Longitude = location.longitude as double;
-      _editableNote.Id = (await _notesCollection.snapshots().length +1).toString();
+  }
 
-      await _notesCollection.add(_editableNote.toFirestore()).then(
-        (value) => {
-          Navigator.pop(context)
-        });
-      
+    void _saveNote() {
+      _editableNote.Title = _titleTextController.text;
+      _editableNote.Body = _bodyTextController.text;
+      _editableNote.UpdateDate = DateTime.now();
+      _notesCollection.add(_editableNote.toFirestore());
+      Navigator.pop(context);
     }
-
 
 
   @override

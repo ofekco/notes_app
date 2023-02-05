@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:location/location.dart';
 
 class Note {
-  String _noteId;
   String _title;
   String _body;
   DateTime _lastUpdateDate;
@@ -14,15 +13,7 @@ class Note {
   double _longitude;
 
 
-  Note(this._noteId, this._title, this._body, this._lastUpdateDate, this._latitude, this._longitude);
-
-  String get Id {
-    return _noteId;
-  }
-
-  set Id (String id) {
-    _noteId = id;
-  }
+  Note(this._title, this._body, this._lastUpdateDate, this._latitude, this._longitude);
 
   String get Title {
     return _title;
@@ -74,7 +65,6 @@ class Note {
       data?['title'],
       data?['body'],
       data?['date'],
-      data?['id'],
       data?['latitude'],
       data?['longitude']
     );
@@ -87,7 +77,9 @@ class Note {
       if (_lastUpdateDate != null) "date": _lastUpdateDate,
       if (_latitude != null) "latitude": _latitude,
       if (_longitude != null) "longitude": _longitude,
-      if (_noteId != null) "id": _noteId,
     };
   }
+
+
+
 }
